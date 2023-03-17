@@ -1,11 +1,4 @@
-name: macOS-12_$(date:yyyyMMdd)$(rev:.r)_unstable
-schedules:
-- cron: "0 0 * * *"
-  displayName: Daily
-  branches:
-    include:
-    - main
-  always: true
+name: macOS-22_$(date:yyyyMMdd)$(rev:.r)_unstable
 
 trigger: none
 pr:
