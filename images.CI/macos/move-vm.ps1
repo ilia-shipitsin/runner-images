@@ -54,6 +54,10 @@ Import-Module $PSScriptRoot\helpers.psm1 -DisableNameChecking
 # Connection to a vCenter Server system
 Connect-VCServer -VIServer $VIServer -VIUserName $VIUserName -VIPassword $VIPassword
 
+# Debug: troubleshooting tag removal
+Write-Host 'Lookup for tag existense...'
+Get-Tag $VMName -ErrorAction 'Continue'
+
 # Clear previously assigned tag with VM Name
 try {
     Remove-Tag $VMName -Confirm:$false
