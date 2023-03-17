@@ -1,4 +1,4 @@
-name: macOS-22_$(date:yyyyMMdd)$(rev:.r)_unstable
+name: macOS-12_$(date:yyyyMMdd)$(rev:.r)_unstable
 
 trigger: none
 pr:
