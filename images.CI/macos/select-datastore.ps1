@@ -110,6 +110,8 @@ function Select-DataStore {
     Select-DataStore -VMName $VMName -Cluster $Cluster -TagCategory $TagCategory -Retries $retries
 }
 
+Write-Host "xxxxxxxxxxxxxxxxx $VMName"
+
 # Connection to a vCenter Server system
 Connect-VCServer -VIServer $VIServer -VIUserName $VIUserName -VIPassword $VIPassword
 
