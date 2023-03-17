@@ -74,13 +74,18 @@ function Select-DataStore {
     $datastore = $availableDatastores | Select-Object @{n="VmCount";e={$_.Name}},@{n="DatastoreName";e={$_.Group | Get-Random}} -First 1
     $buildDatastore = $datastore.DatastoreName
 
-    $tag = Get-Tag -Category $TagCategory -Name $VMName -ErrorAction Ignore
+    $tag = Get-Tag -Category $TagCategory -Name $VMName -ErrorAction Ignore -Verbose
+    Write-Host "xxxxxxxxxxx tag before "
+    $tag
     if (-not $tag)
     {
-        $tag = New-Tag -Name $VMName -Category $TagCategory
+        $tag = New-Tag -Name $VMName -Category $TagCategory -Verbose
+        Write-Host "yyyyyyyyyyyyyyyyyy tag created "
+        $tag
+        Get-Tag -Category $TagCategory -Name $VMName -ErrorAction Ignore -Verbose
     }
 
-    New-TagAssignment -Tag $tag -Entity $buildDatastore | Out-Null
+    New-TagAssignment -Tag $tag -Entity $buildDatastore -Verbose
 
     # Wait for 60 seconds to check if any other tags are assigned to the same datastore
     Start-Sleep -Seconds 60
