@@ -187,6 +187,7 @@ jobs:
           -PrintTopNLongest 25
 
     - name: Move vm to cold storage and clear datastore tag
+      if: always()
       run: |
         $cpuCount = 3
         $coresPerSocketCount = 3
