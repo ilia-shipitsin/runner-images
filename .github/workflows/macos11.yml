@@ -1,5 +1,6 @@
 run-name: macOS-11_unstable.${{ github.run_id }}.${{ github.run_attempt }}
 on:
+  push:
   workflow_dispatch:
     inputs:
       CUSTOM_REPOSITORY:
@@ -8,10 +9,6 @@ on:
       CUSTOM_REPOSITORY_COMMIT_HASH:
         description: 'Commit hash'
         required: false
-  pull_request_target:
-    types: labeled
-    paths:
-    - 'images/macos/**'
 
 jobs:
   macOS_11:
