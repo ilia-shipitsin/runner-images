@@ -40,7 +40,7 @@ defaults:
 
 jobs:
   build:
-    runs-on: macos-vmware
+    runs-on: self-hosted
     timeout-minutes: 1200
     steps:
     - uses: azure/login@v1
