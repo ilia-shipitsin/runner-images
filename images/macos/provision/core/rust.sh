@@ -12,6 +12,9 @@ CARGO_HOME=$HOME/.cargo
 
 echo Install common tools...
 rustup component add rustfmt clippy
+
+echo "ilia debug " $(sysctl -n hw.ncpu)
+
 cargo install -j $(sysctl -n hw.ncpu) --locked bindgen-cli cbindgen cargo-audit cargo-outdated
 
 echo Cleanup Cargo registry cached data...
