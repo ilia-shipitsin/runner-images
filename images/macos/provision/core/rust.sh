@@ -12,7 +12,7 @@ CARGO_HOME=$HOME/.cargo
 
 echo Install common tools...
 rustup component add rustfmt clippy
-cargo install --locked bindgen-cli cbindgen cargo-audit cargo-outdated
+cargo install -j $(sysctl -n hw.ncpu) --locked bindgen-cli cbindgen cargo-audit cargo-outdated
 
 echo Cleanup Cargo registry cached data...
 rm -rf $CARGO_HOME/registry/*
