@@ -78,6 +78,7 @@ EOF
     retry=$((retry-1))
     if [ $retry -eq 0 ]; then
         echo "No retry attempts left"
+        sudo log show --last 5m
         exit 1
     fi
     sleep 10
