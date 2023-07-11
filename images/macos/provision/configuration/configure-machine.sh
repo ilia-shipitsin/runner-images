@@ -62,7 +62,7 @@ retry=10
 while [ $retry -gt 0 ]; do
 {
 
-sudo dtruss df osascript <<EOF
+sudo dtruss -df osascript <<EOF
     tell application "Terminal"
         activate
         do script "automationmodetool enable-automationmode-without-authentication"
