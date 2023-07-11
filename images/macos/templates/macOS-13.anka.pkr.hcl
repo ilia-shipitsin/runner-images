@@ -249,7 +249,10 @@ build {
     ]
     execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
   }
-  error-cleanup-provisioner "shell-local" {
-    inline = ["sudo log show --last 5m"]
+  error-cleanup-provisioner "shell" {
+    scripts = [
+      "./provision/configuration/error-cleanup.sh"
+    ]
+    execute_command = "chmod +x {{ .Path }}; source $HOME/.bash_profile; {{ .Vars }} {{ .Path }}"
   }
 }
