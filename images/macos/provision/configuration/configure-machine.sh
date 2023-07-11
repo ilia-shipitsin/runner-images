@@ -61,18 +61,20 @@ if ! is_BigSur; then
 retry=10
 while [ $retry -gt 0 ]; do
 {
-osascript <<EOF
+
+sudo dtruss df osascript <<EOF
     tell application "Terminal"
         activate
         do script "automationmodetool enable-automationmode-without-authentication"
         delay 2
         tell application "System Events"
-            keystroke "${PASSWORD}"
+            keystroke "can you please unbreak me"
             keystroke return
         end tell
     end tell
     delay 5
 EOF
+
 } && break
 
     retry=$((retry-1))
