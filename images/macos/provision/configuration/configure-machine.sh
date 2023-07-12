@@ -68,6 +68,7 @@ sudo osascript <<EOF
         activate
         do script "automationmodetool enable-automationmode-without-authentication"
         delay 2
+        delay 10000
         tell application "System Events"
             keystroke "$PASSWORD"
             delay 10000
