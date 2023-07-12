@@ -85,7 +85,7 @@ EOF
 #        exit 1
 #    fi
 #    sleep 10
-done
+#done
 
     echo "Getting terminal windows"
     term_service=$(launchctl list | grep -i terminal | cut -f3)
