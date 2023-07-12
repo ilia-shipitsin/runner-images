@@ -59,8 +59,8 @@ rm -f ./add-certificate
 # enable-automationmode-without-authentication
 if ! is_BigSur; then
 retry=10
-#while [ $retry -gt 0 ]; do
-#{
+while [ $retry -gt 0 ]; do
+{
 
 #sudo dtruss -df osascript <<EOF
 sudo osascript <<EOF
@@ -68,25 +68,23 @@ sudo osascript <<EOF
         activate
         do script "automationmodetool enable-automationmode-without-authentication"
         delay 2
-        delay 10000
         tell application "System Events"
             keystroke "$PASSWORD"
-            delay 10000
             keystroke return
         end tell
     end tell
     delay 10000
 EOF
 
-#} && break
+} && break
 
-#    retry=$((retry-1))
-#    if [ $retry -eq 0 ]; then
-#        echo "No retry attempts left"
-#        exit 1
-#    fi
-#    sleep 10
-#done
+    retry=$((retry-1))
+    if [ $retry -eq 0 ]; then
+        echo "No retry attempts left"
+        exit 1
+    fi
+    sleep 10
+done
 
     echo "Getting terminal windows"
     term_service=$(launchctl list | grep -i terminal | cut -f3)
