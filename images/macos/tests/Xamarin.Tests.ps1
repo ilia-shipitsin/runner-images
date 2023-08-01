@@ -7,7 +7,6 @@ $XAMARIN_IOS_VERSIONS = Get-ToolsetValue "xamarin.ios-versions"
 $XAMARIN_MAC_VERSIONS = Get-ToolsetValue "xamarin.mac-versions"
 $XAMARIN_ANDROID_VERSIONS = Get-ToolsetValue "xamarin.android-versions"
 
-BeforeAll {
     function Get-ShortSymlink {
         param (
             [string] $Version
@@ -16,7 +15,6 @@ BeforeAll {
         $versionParts = $Version.Split(".")
         return [String]::Join(".", $versionParts[0..1])
     }
-}
 
 Describe "Mono" -Skip:($os.IsVentura -or $os.IsVenturaArm64) {
     $MONO_VERSIONS | ForEach-Object {
