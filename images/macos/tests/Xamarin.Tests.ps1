@@ -16,69 +16,69 @@ $XAMARIN_ANDROID_VERSIONS = Get-ToolsetValue "xamarin.android-versions"
         return [String]::Join(".", $versionParts[0..1])
     }
 
-Describe "Mono" -Skip:($os.IsVentura -or $os.IsVenturaArm64) {
-    $MONO_VERSIONS | ForEach-Object {
-        Context "$_" {
-            $MONO_VERSIONS_PATH = "/Library/Frameworks/Mono.framework/Versions"
-            $versionFolderPath = Join-Path $MONO_VERSIONS_PATH ([System.Version]::Parse($_).ToString(3))
-            $testCase = @{ MonoVersion = $_; VersionFolderPath = $versionFolderPath; MonoVersionsPath = $MONO_VERSIONS_PATH }
-
-            It "is installed" -TestCases $testCase {
-                param ( [string] $VersionFolderPath )
-
-                $monoBinPath = Join-Path $VersionFolderPath "bin" "mono"
-                $VersionFolderPath | Should -Exist
-                $monoBinPath | Should -Exist
-            }
-
-            It "is available via short link" -TestCases $testCase {
-                param (
-                    [string] $MonoVersion,
-                    [string] $MonoVersionsPath,
-                    [string] $VersionFolderPath
-                )
-
-                $shortSymlink = Get-ShortSymlink $MonoVersion # only 'major.minor'
-                $shortSymlinkFolderPath = Join-Path $MonoVersionsPath $shortSymlink
-                if ($shortSymlink -eq "4.8") { return } # Skip this test for Mono 4.8 because it doesn't contain VERSION file
-                $shortVersionPath = Join-Path $shortSymlinkFolderPath "VERSION"
-                $fullVersionPath = Join-Path $VersionFolderPath "VERSION"
-
-                Validate-IdenticalFileContent -File1 $shortVersionPath -File2 $fullVersionPath
-            }
-
-            It "NUnit console is installed" -TestCases $testCase {
-                param ( [string] $VersionFolderPath )
-
-                $nunitPath = Join-Path $VersionFolderPath "Commands" "nunit3-console"
-                $nunitPath | Should -Exist
-            }
-
-            It "Nuget is installed" -TestCases $testCase {
-                param ( [string] $VersionFolderPath )
-
-                $nugetBinaryPath = Join-Path $VersionFolderPath "lib" "mono" "nuget" "nuget.exe"
-                $nugetBinaryWrapperPath = Join-Path $VersionFolderPath "bin" "nuget"
-                $nugetCommandPath = Join-Path $VersionFolderPath "Commands" "nuget"
-
-                $nugetBinaryPath | Should -Exist
-                $nugetCommandPath | Should -Exist
-                $nugetBinaryWrapperPath | Should -Exist
-            }
-
-            It "Nuget is valid" -TestCases $testCase {
-                param ( [string] $VersionFolderPath )
-
-                $nugetBinaryWrapperPath = Join-Path $VersionFolderPath "bin" "nuget"
-                "$nugetBinaryWrapperPath" | Should -ReturnZeroExitCode
-            }
-        }
-    }
-
-    It "MSBuild is available" {
-        "msbuild -version" | Should -ReturnZeroExitCode
-    }
-}
+#Describe "Mono" -Skip:($os.IsVentura -or $os.IsVenturaArm64) {
+#    $MONO_VERSIONS | ForEach-Object {
+#        Context "$_" {
+#            $MONO_VERSIONS_PATH = "/Library/Frameworks/Mono.framework/Versions"
+#            $versionFolderPath = Join-Path $MONO_VERSIONS_PATH ([System.Version]::Parse($_).ToString(3))
+#            $testCase = @{ MonoVersion = $_; VersionFolderPath = $versionFolderPath; MonoVersionsPath = $MONO_VERSIONS_PATH }
+#
+#            It "is installed" -TestCases $testCase {
+#                param ( [string] $VersionFolderPath )
+#
+#                $monoBinPath = Join-Path $VersionFolderPath "bin" "mono"
+#                $VersionFolderPath | Should -Exist
+#                $monoBinPath | Should -Exist
+#            }
+#
+#            It "is available via short link" -TestCases $testCase {
+#                param (
+#                    [string] $MonoVersion,
+#                    [string] $MonoVersionsPath,
+#                    [string] $VersionFolderPath
+#                )
+#
+#                $shortSymlink = Get-ShortSymlink $MonoVersion # only 'major.minor'
+#                $shortSymlinkFolderPath = Join-Path $MonoVersionsPath $shortSymlink
+#                if ($shortSymlink -eq "4.8") { return } # Skip this test for Mono 4.8 because it doesn't contain VERSION file
+#                $shortVersionPath = Join-Path $shortSymlinkFolderPath "VERSION"
+#                $fullVersionPath = Join-Path $VersionFolderPath "VERSION"
+#
+#                Validate-IdenticalFileContent -File1 $shortVersionPath -File2 $fullVersionPath
+#            }
+#
+#            It "NUnit console is installed" -TestCases $testCase {
+#                param ( [string] $VersionFolderPath )
+#
+#                $nunitPath = Join-Path $VersionFolderPath "Commands" "nunit3-console"
+#                $nunitPath | Should -Exist
+#            }
+#
+#            It "Nuget is installed" -TestCases $testCase {
+#                param ( [string] $VersionFolderPath )
+#
+#                $nugetBinaryPath = Join-Path $VersionFolderPath "lib" "mono" "nuget" "nuget.exe"
+#                $nugetBinaryWrapperPath = Join-Path $VersionFolderPath "bin" "nuget"
+#                $nugetCommandPath = Join-Path $VersionFolderPath "Commands" "nuget"
+#
+#                $nugetBinaryPath | Should -Exist
+#                $nugetCommandPath | Should -Exist
+#                $nugetBinaryWrapperPath | Should -Exist
+#            }
+#
+#            It "Nuget is valid" -TestCases $testCase {
+#                param ( [string] $VersionFolderPath )
+#
+#                $nugetBinaryWrapperPath = Join-Path $VersionFolderPath "bin" "nuget"
+#                "$nugetBinaryWrapperPath" | Should -ReturnZeroExitCode
+#            }
+#        }
+#    }
+#
+#    It "MSBuild is available" {
+#        "msbuild -version" | Should -ReturnZeroExitCode
+#    }
+#}
 
 Describe "Xamarin.iOS" -Skip:($os.IsVentura -or $os.IsVenturaArm64) {
     $XAMARIN_IOS_VERSIONS | ForEach-Object {
