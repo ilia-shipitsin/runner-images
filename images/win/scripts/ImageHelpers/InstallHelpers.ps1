@@ -206,9 +206,7 @@ function Start-DownloadWithRetry
 
             if ($Retries -eq 0)
             {
-                Write-Host "File can't be downloaded. Please try later or check that file exists by url: $Url"
-                Write-Host "Total time elapsed $failTime"
-                exit 1
+                throw "File can't be downloaded. Please try later or check that file exists by url: $Url`nTotal time elapsed $failTime"
             }
 
             Write-Host "Waiting 30 seconds before retrying. Retries left: $Retries"
