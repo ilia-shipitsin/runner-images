@@ -34,10 +34,13 @@ ANDROID_ADDITIONAL_TOOLS=($(get_toolset_value '.android."additional-tools"[]'))
 ANDROID_NDK_MAJOR_VERSIONS=($(get_toolset_value '.android.ndk."versions"[]'))
 ANDROID_NDK_MAJOR_DEFAULT=$(get_toolset_value '.android.ndk.default')
 ANDROID_NDK_MAJOR_LATEST=$(get_toolset_value '.android.ndk."versions"[-1]')
+
 # Get the latest command line tools from https://developer.android.com/studio#cmdline-tools
 # Newer version(s) require Java 11 by default
 # See https://github.com/actions/runner-images/issues/6960
-ANDROID_OSX_SDK_URL="https://dl.google.com/android/repository/commandlinetools-mac-9123335_latest.zip"
+
+ANDROID_OSX_SDK_URL=$(get_toolset_value '.android.simulator_url')
+
 ANDROID_HOME=$HOME/Library/Android/sdk
 ANDROID_OSX_SDK_FILE=tools-macosx.zip
 
