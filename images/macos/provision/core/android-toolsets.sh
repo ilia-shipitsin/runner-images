@@ -1,6 +1,12 @@
 #!/bin/bash -e -o pipefail
 source ~/utils/utils.sh
 
+
+######## dddddebuge
+echo "ddddddddddddddebug"
+java -version
+
+
 function filter_components_by_version {
     minimumVersion=$1
     shift
