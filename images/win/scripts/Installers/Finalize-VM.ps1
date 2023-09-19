@@ -145,4 +145,14 @@ $disableTaskNames | ForEach-Object {
     Disable-ScheduledTask @PSItem -ErrorAction Ignore
 } | Out-Null
 
+
+######## collect WPP on startup
+$trigger = New-ScheduledTaskTrigger -AtStartup
+$action = New-ScheduledTaskAction -Execute 'C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\xperf.exe' -Argument '-start -on LOADER+PROC_THREAD+DISK_IO+HARD_FAULTS+DPC+INTERRUPT+CSWITCH+PERF_COUNTER+FILE_IO_INIT+REGISTRY'
+$principal = New-ScheduledTaskPrincipal -UserId 'NT AUTHORITY\SYSTEM' -LogonType ServiceAccount -RunLevel Highest
+$settings = New-ScheduledTaskSettingsSet
+$task = New-ScheduledTask -Action $action -Principal $principal -Trigger $trigger -Settings $settings
+Register-ScheduledTask WPP -InputObject $task
+########
+
 Write-Host "Finalize-VM.ps1 - completed"
