@@ -69,6 +69,9 @@ Write-Host "Enable long path behavior"
 # See https://docs.microsoft.com/en-us/windows/desktop/fileio/naming-a-file#maximum-path-length-limitation
 Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
 
+Write-Host "Uninstall Cortana"
+Get-AppxPackage -AllUsers Microsoft. 549981C3F5F10 | Remove-AppPackage
+
 # Expand disk size of OS drive
 $driveLetter = "C"
 $size = Get-PartitionSupportedSize -DriveLetter $driveLetter
