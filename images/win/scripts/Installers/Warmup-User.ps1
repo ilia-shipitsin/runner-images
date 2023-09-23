@@ -20,18 +20,14 @@ Copy-Item ${env:USERPROFILE}\AppData\Local\Microsoft\VisualStudio -Destination c
 reg.exe load HKLM\DEFAULT c:\users\default\ntuser.dat
 reg.exe copy HKCU\Software\Microsoft\VisualStudio HKLM\DEFAULT\Software\Microsoft\VisualStudio /s
 
-
-#############
-$registryKeyPath = 'HKLM:\DEFAULT\Software\TortoiseSVN'
+$registryKeyPath = 'HKCU:\Software\TortoiseSVN'
 if (-not(Test-Path -Path $registryKeyPath)) {
     New-Item -Path $registryKeyPath -ItemType Directory -Force
 }
 
-# Add registry value to enable Developer Mode
 New-ItemProperty -Path $RegistryKeyPath -Name CacheType -PropertyType DWORD -Value 0
 
-##############
-
+reg.exe copy HKCU\Software\TortoiseSVN HKLM\DEFAULT\Software\TortoiseSVN /s
 reg.exe unload HKLM\DEFAULT
 
 
