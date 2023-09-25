@@ -98,6 +98,7 @@ $servicesToDisable = @(
     "SysMain"
     "gupdate"
     "gupdatem"
+    "StorSvc"
 )
 
 $servicesToDisable | ForEach-Object {
