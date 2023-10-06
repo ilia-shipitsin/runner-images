@@ -2,6 +2,10 @@
 source ~/utils/utils.sh
 
 echo Installing Git...
+### dependency
+brew_smart_install "pcre2"
+sleep 60
+
 brew_smart_install "git"
 sleep 60
 
