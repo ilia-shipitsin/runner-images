@@ -5,6 +5,7 @@ gccVersions=$(get_toolset_value '.gcc.versions | .[]')
 
 for gccVersion in $gccVersions; do
     brew_smart_install "gcc@${gccVersion}"
+    sleep 60
 done
 
 # Delete default gfortran link if it exists https://github.com/actions/runner-images/issues/1280

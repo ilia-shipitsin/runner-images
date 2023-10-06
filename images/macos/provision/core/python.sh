@@ -23,12 +23,14 @@ fi
 # https://github.com/actions/runner-images/issues/2322
 echo "Brew Installing Python 3"
 brew_smart_install "python@3.11" || brew link --overwrite python@3.11
+sleep 60
 
 echo "Installing pipx"
 export PIPX_BIN_DIR=/usr/local/opt/pipx_bin
 export PIPX_HOME=/usr/local/opt/pipx
 
 brew_smart_install "pipx"
+sleep 60
 
 echo "export PIPX_BIN_DIR=${PIPX_BIN_DIR}" >> "${HOME}/.bashrc"
 echo "export PIPX_HOME=${PIPX_HOME}" >> "${HOME}/.bashrc"

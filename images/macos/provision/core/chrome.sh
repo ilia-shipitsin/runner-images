@@ -4,6 +4,7 @@ arch=$(get_arch)
 
 echo "Installing Google Chrome..."
 brew install --cask google-chrome
+sleep 60
 
 # Parse Google Chrome version
 FULL_CHROME_VERSION=$("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --version)
@@ -45,5 +46,6 @@ mv "/tmp/chrome-${CHROME_PLATFORM}/${CHROME_FOR_TESTING_APP}" "/Applications/${C
 
 echo "Installing Selenium"
 brew_smart_install "selenium-server"
+sleep 60
 
 invoke_tests "Browsers" "Chrome"

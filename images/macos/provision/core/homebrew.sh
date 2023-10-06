@@ -28,12 +28,15 @@ brew analytics off
 # jq is required for further installation scripts
 echo "Installing jq..."
 brew install jq
+sleep 60
 
 echo "Installing curl..."
 brew install curl
+sleep 60
 
 echo "Installing wget..."
 brew_smart_install "wget"
+sleep 60
 
 # init brew bundle feature
 brew tap Homebrew/bundle

@@ -3,11 +3,13 @@ source ~/utils/utils.sh
 
 echo Installing Git...
 brew_smart_install "git"
+sleep 60
 
 git config --global --add safe.directory "*"
 
 echo Installing Git LFS
 brew_smart_install "git-lfs"
+sleep 60
 
 # Update global git config
 git lfs install

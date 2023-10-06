@@ -3,6 +3,7 @@ source ~/utils/utils.sh
 
 echo "Installing Microsoft Edge..."
 brew install --cask microsoft-edge
+sleep 60
 
 EDGE_INSTALLATION_PATH="/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"
 EDGE_VERSION=$("$EDGE_INSTALLATION_PATH" --version | cut -d' ' -f 3)
