@@ -9,6 +9,18 @@ toolsetVersion=$(get_toolset_value '.mongodb.version')
 brew tap mongodb/brew
 versionToInstall=$(brew search --formulae /mongodb-community@$toolsetVersion/ | awk -F'/' '{print $3}' | tail -1)
 echo "Installing mongodb $versionToInstall"
+
+# dependencies
+brew_smart_install mongodb/brew/mongodb-database-tools
+sleep 60
+
+brew_smart_install c-ares
+sleep 60
+
+brew_smart_install icu4c
+sleep 60
+##############
+
 brew_smart_install "$versionToInstall"
 sleep 60
 
