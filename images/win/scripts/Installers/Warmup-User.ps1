@@ -32,17 +32,13 @@ reg.exe copy HKCU\Software\TortoiseSVN HKLM\DEFAULT\Software\TortoiseSVN /s
 
 # warmup SQL LocalDB
 # https://github.com/actions/runner-images/issues/8164
+# https://stackoverflow.com/questions/23150238/localdb-change-sql-server-default-location
 
+$originalUSERPROFILE = ${env:USERPROFILE}
+${env:USERPROFILE} = 'c:\LocalDB'
+$null = New-Item -ItemType 'Directory' -Path 'c:\LocalDB\AppData\Local'
 sqllocaldb create MSSQLLocalDB
-
-$localDBInstance = Get-ChildItem -Path 'HKCU:\Software\Microsoft\Microsoft SQL Server\UserInstances'
-$instanceName = ($localDBInstance.Name).Split('\').where({ $true },'Last')
-$instancePath = 'HKCU:\Software\Microsoft\Microsoft SQL Server\UserInstances\' + $instanceName
-$dataDirectory = (Get-ItemProperty -Path $instancePath -Name 'DataDirectory').DataDirectory
-$localDBPath = 'C:\LocalDB'
-New-Item -ItemType 'Directory' -Path $localDBPath
-Move-Item -Path "$dataDirectory\*" -Destination $localDBPath
-Set-ItemProperty -Path $instancePath -Name 'DataDirectory' -Value $localDBPath
+${env:USERPROFILE} = $originalUSERPROFILE
 
 reg.exe copy 'HKCU\Software\Microsoft\Microsoft SQL Server' 'HKLM\DEFAULT\Software\Microsoft\Microsoft SQL Server' /s
 
