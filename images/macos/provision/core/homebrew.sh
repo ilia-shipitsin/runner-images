@@ -2,6 +2,9 @@
 
 source ~/utils/utils.sh
 
+# try pinning
+echo '140.82.121.34 ghcr.io ghcr' | sudo tee -a /etc/hosts
+
 arch=$(get_arch)
 
 echo "Installing Homebrew..."
