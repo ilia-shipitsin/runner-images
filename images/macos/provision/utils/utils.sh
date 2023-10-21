@@ -234,7 +234,22 @@ get_github_package_download_url() {
 
     [ -n "$API_PAT" ] && authString=(-H "Authorization: token ${API_PAT}")
 
-    json=$(curl "${authString[@]}" -fsSL "https://api.github.com/repos/${REPO_ORG}/releases?per_page=${SEARCH_IN_COUNT}")
+    retries=10
+    while [ $retries -gt 0 ]; do
+        exit_code=0
+        curl "${authString[@]}" -fsSL "https://api.github.com/repos/${REPO_ORG}/releases?per_page=${SEARCH_IN_COUNT}" > /tmp/get_github_package_download_url.json || exit_code=$?
+        if [ $exit_code -eq 0 ]; then
+            json=$(cat /tmp/get_github_package_download_url.json)
+            break
+        fi
+        sleep 60
+        ((retries--))
+    done
+
+    if [ $exit_code -ne 0 ]; then
+        echo "Failed to get https://api.github.com/repos/${REPO_ORG}/releases?per_page=${SEARCH_IN_COUNT}"
+        exit 1
+    fi
 
     if [[ "$VERSION" == "latest" ]]; then
         tagName=$(echo $json | jq -r '.[] | select((.prerelease==false) and (.assets | length > 0)).tag_name' | sort --unique --version-sort | egrep -v ".*-[a-z]" | tail -1)
