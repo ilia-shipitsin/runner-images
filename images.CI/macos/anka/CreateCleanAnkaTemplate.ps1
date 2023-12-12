@@ -104,26 +104,23 @@ function Invoke-SoftwareUpdate {
         '13.\d' { $nextOSVersion = 'macOS Sonoma'  }
     }
     # Make an array of updates
-    $listOfNewUpdates = $newUpdates.split('*').Trim('')
+    $listOfNewUpdates = $newUpdates.split('*').Trim('').where{ ($_.Contains('Action: restart')) -and !($_ -match $nextOSVersion) -and (-not [String]::IsNullOrEmpty($_)) }
     foreach ($newupdate in $listOfNewUpdates) {
-        # Will be True if the value is not Venture, not empty, and contains "Action: restart" words
-        if ($newupdate.Contains("Action: restart") -and !($newupdate -match $nextOSVersion) -and (-not [String]::IsNullOrEmpty($newupdate))) {
-            Write-Host "`t[*] Sleep 120 seconds before the software updates have been installed"
-            Start-Sleep -Seconds 120
+        Write-Host "`t[*] Sleep 120 seconds before the software updates have been installed"
+        Start-Sleep -Seconds 120
 
-            Write-Host "`t[*] Waiting for loginwindow process"
-            Wait-LoginWindow -HostName $ipAddress | Show-StringWithFormat
+        Write-Host "`t[*] Waiting for loginwindow process"
+        Wait-LoginWindow -HostName $ipAddress | Show-StringWithFormat
 
-            # Re-enable AutoLogon after installing a new security software update
-            Invoke-EnableAutoLogon
+        # Re-enable AutoLogon after installing a new security software update
+        Invoke-EnableAutoLogon
 
-            # Check software updates have been installed
-            $updates = Get-SoftwareUpdate -HostName $ipAddress
-            if ($updates.Contains("Action: restart") -and !($newupdate -match $nextOSVersion)) {
-                Write-Host "`t[x] Software updates failed to install: "
-                Show-StringWithFormat $updates
-                exit 1
-            }
+        # Check software updates have been installed
+        $updates = Get-SoftwareUpdate -HostName $ipAddress
+        if ($updates.Contains("Action: restart") -and !($newupdate -match $nextOSVersion)) {
+            Write-Host "`t[x] Software updates failed to install: "
+            Show-StringWithFormat $updates
+            exit 1
         }
     }
 
